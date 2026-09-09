@@ -5,14 +5,14 @@ import java.util.HashMap;
 
 public class Producto {
 
-    private int id;
+    private final int id;
     private String nombre;
     private String descripcion;
-    private List<String> categorias;
-    private Map<String, String> variantes;
-    private float coste_dompra;
+    private final List<String> categorias;
+    private final List<Map<String, Object>> variantes;
+    private float coste_compra;
     private float precio_venta;
-    private List<Proveedor> proveedores;
+    private final List<Proveedor> proveedores;
     private boolean oculto;
 
 
@@ -27,7 +27,7 @@ public class Producto {
         this.precio_venta = precio_venta;
 
         this.categorias = new ArrayList<>();
-        this.variantes = new HashMap<>();
+        this.variantes = new ArrayList<>();
         this.proveedores = new ArrayList<>();
         this.oculto = false;
     }
@@ -64,12 +64,12 @@ public class Producto {
 
 
     //variantes
-    public Map<String, String> get_variantes() {
+    public List<Map<String, Object>> get_variantes() {
         return variantes;
     }
 
-    public void agregar_variante(String nombre, String valor) {
-        variantes.put(nombre, valor);
+    public void agregar_variante(Map<String, Object> variante) {
+        variantes.add(variante);
     }
 
     public void eliminar_variante(String nombre) {
