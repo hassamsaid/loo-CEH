@@ -5,7 +5,7 @@ public class Inventario {
     private int id;
 
     // Producto -> Variante -> Cantidad
-    private Map<Producto, Map<Map<String, Object>, Integer>> productos;
+    private final Map<Producto, Map<Map<String, Object>, Integer>> productos;
 
 
     public Inventario() {
