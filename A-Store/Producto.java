@@ -10,21 +10,21 @@ public class Producto {
     private String descripcion;
     private List<String> categorias;
     private Map<String, String> variantes;
-    private float costeCompra;
-    private float precioVenta;
+    private float coste_dompra;
+    private float precio_venta;
     private List<Proveedor> proveedores;
     private boolean oculto;
 
 
     //crear_producto()
     public Producto(int id, String nombre, String descripcion,
-                    float costeCompra, float precioVenta) {
+                    float coste_compra, float precio_venta) {
 
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.costeCompra = costeCompra;
-        this.precioVenta = precioVenta;
+        this.coste_compra = coste_compra;
+        this.precio_venta = precio_venta;
 
         this.categorias = new ArrayList<>();
         this.variantes = new HashMap<>();
@@ -32,77 +32,77 @@ public class Producto {
         this.oculto = false;
     }
 
-    public String getNombre() {
+    public String get_nombre() {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
+    public void set_nombre(String nombre) {
         this.nombre = nombre;
     }
 
-    public String getDescripcion() {
+    public String get_descripcion() {
         return descripcion;
     }
 
-    public void setDescripcion(String descripcion) {
+    public void set_descripcion(String descripcion) {
         this.descripcion = descripcion;
     }
 
 
     //categorias
-    public List<String> getCategorias() {
+    public List<String> get_categorias() {
         return categorias;
     }
 
-    public void anadirCategoria(String categoria) {
+    public void anadir_categoria(String categoria) {
         categorias.add(categoria);
     }
 
-    public void eliminarCategoria(String categoria) {
+    public void eliminar_categoria(String categoria) {
         categorias.remove(categoria);
     }
 
 
     //variantes
-    public Map<String, String> getVariantes() {
+    public Map<String, String> get_variantes() {
         return variantes;
     }
 
-    public void anadirVariante(String nombre, String valor) {
+    public void agregar_variante(String nombre, String valor) {
         variantes.put(nombre, valor);
     }
 
-    public void eliminarVariante(String nombre) {
+    public void eliminar_variante(String nombre) {
         variantes.remove(nombre);
     }
 
 
     //coste compra
-    public float getCosteCompra() {
-        return costeCompra;
+    public float get_coste_compra() {
+        return coste_compra;
     }
 
-    public void setCosteCompra(float costeCompra) {
-        this.costeCompra = costeCompra;
+    public void set_coste_compra(float coste_compra) {
+        this.coste_compra = coste_compra;
     }
 
 
     //precio venta
-    public float getPrecioVenta() {
-        return precioVenta;
+    public float get_precio_venta() {
+        return precio_venta;
     }
 
-    public void setPrecioVenta(float precioVenta) {
-        this.precioVenta = precioVenta;
+    public void set_precio_venta(float precio_venta) {
+        this.precio_venta = precio_venta;
     }
 
 
     //provedores
-    public void anadirProveedor(Proveedor proveedor) {
+    public void agregar_proveedor(Proveedor proveedor) {
         proveedores.add(proveedor);
     }
 
-    public Proveedor buscarProveedor(String nombre) {
+    public Proveedor buscar_proveedor(String nombre) {
 
         for (Proveedor proveedor : proveedores) {
 
@@ -115,26 +115,26 @@ public class Producto {
         return null;
     }
 
-    public List<Proveedor> getProveedores() {
+    public List<Proveedor> get_proveedores() {
         return proveedores;
     }
 
-    public void eliminarProveedor(Proveedor proveedor) {
+    public void eliminar_proveedor(Proveedor proveedor) {
         proveedores.remove(proveedor);
     }
 
 
     //calcular ganancia uni
-    public float calcularGananciaUnitaria() {
-        return precioVenta - costeCompra;
+    public float calcular_ganancia_unitaria() {
+        return precio_venta - coste_compra;
     }
 
     //oculto
-    public boolean getOculto() {
+    public boolean get_oculto() {
         return oculto;
     }
 
-    public void setOculto(boolean oculto) {
+    public void set_oculto(boolean oculto) {
         this.oculto = oculto;
     }
 }
