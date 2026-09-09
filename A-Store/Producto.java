@@ -16,7 +16,7 @@ public class Producto {
     private boolean oculto;
 
 
-    // crear_producto()
+    //crear_producto()
     public Producto(int id, String nombre, String descripcion,
                     float costeCompra, float precioVenta) {
 
@@ -49,7 +49,7 @@ public class Producto {
     }
 
 
-    // CATEGORIAS
+    //categorias
     public List<String> getCategorias() {
         return categorias;
     }
@@ -63,7 +63,7 @@ public class Producto {
     }
 
 
-    // VARIANTES
+    //variantes
     public Map<String, String> getVariantes() {
         return variantes;
     }
@@ -77,7 +77,7 @@ public class Producto {
     }
 
 
-    // COSTE DE COMPRA
+    //coste compra
     public float getCosteCompra() {
         return costeCompra;
     }
@@ -87,7 +87,7 @@ public class Producto {
     }
 
 
-    // PRECIO DE VENTA
+    //precio venta
     public float getPrecioVenta() {
         return precioVenta;
     }
@@ -97,7 +97,7 @@ public class Producto {
     }
 
 
-    // PROVEEDORES
+    //provedores
     public void anadirProveedor(Proveedor proveedor) {
         proveedores.add(proveedor);
     }
@@ -124,12 +124,12 @@ public class Producto {
     }
 
 
-    // CALCULAR GANANCIA UNITARIA
+    //calcular ganancia uni
     public float calcularGananciaUnitaria() {
         return precioVenta - costeCompra;
     }
 
-    // OCULTO
+    //oculto
     public boolean getOculto() {
         return oculto;
     }
