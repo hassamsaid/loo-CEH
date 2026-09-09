@@ -2,7 +2,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.ArrayList;
 import java.util.HashMap;
-public class ventas {
+public class Venta {
 
     private int id;
     private String fecha;
@@ -14,7 +14,8 @@ public class ventas {
     private List<DetalleVenta> productos_venta;
     private Map<String, Float> descuentos;
     private Map<String, Float> impuestos;
-    public ventas() {
+    public Venta(int id) {
+        this.id = id;
         this.productos_venta = new ArrayList<>();
         this.descuentos = new HashMap<>();
         this.impuestos = new HashMap<>();

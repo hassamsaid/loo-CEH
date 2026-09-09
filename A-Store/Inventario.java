@@ -2,21 +2,16 @@ import java.util.*;
 
 public class Inventario {
 
-    private int id;
+    private final int id;
 
     // Producto -> Variante -> Cantidad
     private final Map<Producto, Map<Map<String, Object>, Integer>> productos;
 
 
-    public Inventario() {
+    public Inventario(int id) {
+        this.id = id;
         productos = new HashMap<>();
     }
-
-
-    public static Inventario crear_inventario() {
-        return new Inventario();
-    }
-
 
     // GETTERS
 

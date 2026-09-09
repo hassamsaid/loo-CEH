@@ -1,6 +1,6 @@
 import java.util.List;
 
-class AdministracionFinanciera {
+public class AdministradorFinanciero {
 
     // Atributos
     private int id;
@@ -10,7 +10,7 @@ class AdministracionFinanciera {
     private float ingreso_total;
 
     // Constructor
-    public AdministracionFinanciera(int id, float costos_mantenimiento, float servicios, float otros_gastos) {
+    public AdministradorFinanciero(int id, float costos_mantenimiento, float servicios, float otros_gastos) {
         this.id = id;
         this.costos_mantenimiento = costos_mantenimiento;
         this.servicios = servicios;
@@ -19,7 +19,6 @@ class AdministracionFinanciera {
     }
 
     // Getters y Setters
-    public int get_id() { return id; }
     public void set_id(int id) { this.id = id; }
 
     public float get_costos_mantenimiento() { return costos_mantenimiento; }
@@ -79,21 +78,5 @@ class AdministracionFinanciera {
 
     public float calcular_utilidad(List<Venta> ventas, List<Empleado> empleados) {
         return calcular_ingresos(ventas) - calcular_gastos(empleados);
-    }
-
-    public static class Venta {
-        private float total;
-
-        public Venta(float total) {
-            this.total = total;
-        }
-
-        public float get_total() {
-            return total;
-        }
-
-        public void set_total(float total) {
-            this.total = total;
-        }
     }
 }
