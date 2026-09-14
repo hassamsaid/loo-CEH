@@ -11,7 +11,7 @@ public class Proveedor {
         this.nombre = nombre; 
         this.contacto = contacto; 
         this.ubicacion = ubicacion; 
-        this. oculto = false; //no esta oculto por defecto
+        this.oculto = false; //no esta oculto por defecto
     }
 
     //constuctor simulando valores por defecto 
