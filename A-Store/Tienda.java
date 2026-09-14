@@ -2,11 +2,11 @@ import java.util.*;
 
 public class Tienda {
 
-    private List<Empleado> empleados;
-    private Inventario inventario;
-    private AdministradorFinanciero administrador_financiero;
-    private List<Proveedor> proveedores;
-    private List<Venta> ventas;
+    private final List<Empleado> empleados;
+    private final Inventario inventario;
+    private final AdministradorFinanciero administrador_financiero;
+    private final List<Proveedor> proveedores;
+    private final List<Venta> ventas;
 
     // Guarda las ID's usadas por cada clase, para evitar duplicidad
     private final Map<String, List<Integer>> ids_globales;
@@ -24,7 +24,7 @@ public class Tienda {
 
     //public static Tienda cargar_datos() {}
 
-    public int generador_id(String class_name) {
+    public final int generador_id(String class_name) {
 
         ids_globales.putIfAbsent(class_name, new ArrayList<>());
 
@@ -122,3 +122,4 @@ public class Tienda {
 
 
     //public Map<String, Object> ocultar_venta(args) {}
+}
