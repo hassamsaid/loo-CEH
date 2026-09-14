@@ -33,10 +33,6 @@ public class Proveedor {
         return nombre; 
     }
 
-    public String getNombre() {
-        return nombre; 
-    } 
-
     public void set_nombre(String nombre){
         this.nombre = nombre; 
     }
