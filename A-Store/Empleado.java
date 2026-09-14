@@ -10,8 +10,7 @@ public class Empleado {
     private final boolean oculto;
 
     //constructor
-    public Empleado(String nombre, String tipo, String cargo, float salario, String horario) {
-        this.id = 0; //aqui va generador de Ids"
+    public Empleado(int id, String nombre, String tipo, String cargo, float salario, String horario) {
         this.nombre = nombre;
         this.tipo = tipo;
         this.salario = salario;
