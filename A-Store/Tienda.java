@@ -1,51 +1,47 @@
 import java.util.*;
 
-public class Tienda{
+public class Tienda {
 
-    private List<Empleado> empleados;
-    private Inventario inventario;
-    private AdministradorFinanciero administrador_financiero;
-    private List<Proveedor> proveedores;
-    private List<Venta> ventas;
+    private final List<Empleado> empleados;
+    private final Inventario inventario;
+    private final AdministradorFinanciero administrador_financiero;
+    private final List<Proveedor> proveedores;
+    private final List<Venta> ventas;
 
     // Guarda las ID's usadas por cada clase, para evitar duplicidad
-    private Map<String, List<Integer>> ids_globales;
+    private final Map<String, List<Integer>> ids_globales;
 
     public Tienda() {
         empleados = new ArrayList<>();
-        inventario = new Inventario();
-        administrador_financiero = new AdministradorFinanciero();
+        inventario = new Inventario(generador_id("Inventario"));
+        administrador_financiero = new AdministradorFinanciero(generador_id("AdministradorFinanciero"), 0, 0, 0);
         proveedores = new ArrayList<>();
         ventas = new ArrayList<>();
         ids_globales = new HashMap<>();
-    }
-
-    public static Tienda crear_tienda() {
-        return new Tienda();
     }
 
     //public void guardar_datos() {}
 
     //public static Tienda cargar_datos() {}
 
-    public int generador_id(String class_name) {
+    public final int generador_id(String class_name) {
 
-    ids_globales.putIfAbsent(class_name, new ArrayList<>());
+        ids_globales.putIfAbsent(class_name, new ArrayList<>());
 
-    List<Integer> ids_usados = ids_globales.get(class_name);
+        List<Integer> ids_usados = ids_globales.get(class_name);
 
-    int nuevo_id;
+        int nuevo_id;
 
-    if (ids_usados.isEmpty()) {
-        nuevo_id = 1;
-    } else {
-        nuevo_id = ids_usados.get(ids_usados.size() - 1) + 1;
+        if (ids_usados.isEmpty()) {
+            nuevo_id = 1;
+        } else {
+            nuevo_id = ids_usados.get(ids_usados.size() - 1) + 1;
+        }
+
+        ids_usados.add(nuevo_id);
+
+        return nuevo_id;
     }
-
-    ids_usados.add(nuevo_id);
-
-    return nuevo_id;
-}
 
     //GETTERS
 
@@ -126,3 +122,4 @@ public class Tienda{
 
 
     //public Map<String, Object> ocultar_venta(args) {}
+}
