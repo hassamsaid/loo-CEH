@@ -3,7 +3,7 @@ import java.util.List;
 public class AdministradorFinanciero {
 
     // Atributos
-    private int id;
+    private final int id;
     private float costos_mantenimiento;
     private float servicios;
     private float otros_gastos;
@@ -19,7 +19,7 @@ public class AdministradorFinanciero {
     }
 
     // Getters y Setters
-    public void set_id(int id) { this.id = id; }
+    public int get_id() { return id; }
 
     public float get_costos_mantenimiento() { return costos_mantenimiento; }
     public void set_costos_mantenimiento(float costos_mantenimiento) { this.costos_mantenimiento = costos_mantenimiento; }
