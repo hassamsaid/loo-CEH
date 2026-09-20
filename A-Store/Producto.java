@@ -1,7 +1,6 @@
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
 
 public class Producto {
 
@@ -30,6 +29,10 @@ public class Producto {
         this.variantes = new ArrayList<>();
         this.proveedores = new ArrayList<>();
         this.oculto = false;
+    }
+
+    public int get_id() {
+        return id;
     }
 
     public String get_nombre() {
@@ -72,8 +75,8 @@ public class Producto {
         variantes.add(variante);
     }
 
-    public void eliminar_variante(String nombre) {
-        variantes.remove(nombre);
+    public void eliminar_variante(Map<String, Object> variante) {
+        variantes.remove(variante);
     }
 
 
@@ -106,7 +109,7 @@ public class Producto {
 
         for (Proveedor proveedor : proveedores) {
 
-            if (proveedor.getNombre().equalsIgnoreCase(nombre)) {
+            if (proveedor.get_nombre().equalsIgnoreCase(nombre)) {
                 return proveedor;
             }
 
