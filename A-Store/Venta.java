@@ -1,7 +1,7 @@
-import java.util.List;
-import java.util.Map;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Venta {
 
@@ -22,6 +22,9 @@ public class Venta {
         this.impuestos = new HashMap<>();
         this.subtotal = 0.0f;
         this.total = 0.0f;
+    }
+    public int get_id() {
+        return this.id;
     }
     public void agregar_productos(DetalleVenta producto) {
         this.productos_venta.add(producto);
@@ -90,7 +93,10 @@ public class Venta {
     public float get_total() {
         return this.total;
     }
-    public void modificar_metodo_pago(String nuevo_metodo) {
+    public String get_metodo_pago() {
+        return this.metodo_pago;
+    }
+    public void set_metodo_pago(String nuevo_metodo) {
         this.metodo_pago = nuevo_metodo;
     }
     public boolean get_oculto() {
