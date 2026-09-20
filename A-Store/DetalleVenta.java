@@ -1,21 +1,21 @@
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
 public class DetalleVenta {
     
-    private int id;
-    private Producto producto; 
-    private Map<String, String> variante; 
+    private final int id;
+    private final Producto producto; 
+    private final Map<String, String> variante; 
     private int cantidad;
-    private float precio_unitario;
+    private final float precio_unitario;
     private float subtotal_linea;
 
-    public DetalleVenta(int id, Producto producto, int cantidad, float precio_unitario) {
+    public DetalleVenta(int id, Producto producto, Map<String, String> variante, int cantidad, float precio_unitario) {
         this.id = id;
         this.producto = producto;
         this.cantidad = cantidad;
-        this.precio_unitario = precio_unitario;
         this.variante = new HashMap<>(); 
+        this.precio_unitario = precio_unitario;
         
         this.calcular_subtotal_linea(); 
     }
@@ -45,7 +45,7 @@ public class DetalleVenta {
         return this.precio_unitario;
     }
 
-    public float calcular_subtotal_linea() {
+    public final float calcular_subtotal_linea() {
         this.subtotal_linea = this.cantidad * this.precio_unitario;
         return this.subtotal_linea;
     }
