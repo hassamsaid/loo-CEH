@@ -106,7 +106,7 @@ public class Producto {
 
         for (Proveedor proveedor : proveedores) {
 
-            if (proveedor.getNombre().equalsIgnoreCase(nombre)) {
+            if (proveedor.get_nombre().equalsIgnoreCase(nombre)) {
                 return proveedor;
             }
 
