@@ -2,9 +2,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class Producto {
+public class Producto extends Entidad {
 
-    private final int id;
     private String nombre;
     private String descripcion;
     private final List<String> categorias;
@@ -12,14 +11,12 @@ public class Producto {
     private float coste_compra;
     private float precio_venta;
     private final List<Proveedor> proveedores;
-    private boolean oculto;
-
 
     //crear_producto()
     public Producto(int id, String nombre, String descripcion,
                     float coste_compra, float precio_venta) {
-
-        this.id = id;
+        
+        super(id);
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.coste_compra = coste_compra;
@@ -28,11 +25,6 @@ public class Producto {
         this.categorias = new ArrayList<>();
         this.variantes = new ArrayList<>();
         this.proveedores = new ArrayList<>();
-        this.oculto = false;
-    }
-
-    public int get_id() {
-        return id;
     }
 
     public String get_nombre() {
@@ -130,14 +122,5 @@ public class Producto {
     //calcular ganancia uni
     public float calcular_ganancia_unitaria() {
         return precio_venta - coste_compra;
-    }
-
-    //oculto
-    public boolean get_oculto() {
-        return oculto;
-    }
-
-    public void set_oculto(boolean oculto) {
-        this.oculto = oculto;
     }
 }

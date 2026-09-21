@@ -1,31 +1,21 @@
-public class Empleado {
+public class Empleado extends Entidad {
     //Atributos
-    private int id;
     private String nombre;
     private String tipo;
     private String cargo;
     private float salario;
     private String horario;
-    private final boolean activo;
-    private final boolean oculto;
 
     //constructor
     public Empleado(int id, String nombre, String tipo, String cargo, float salario, String horario) {
+        super(id);
         this.nombre = nombre;
         this.tipo = tipo;
         this.salario = salario;
         this.horario = horario;
-        this.activo = true;
-        this.oculto = false;
 
 }
 //getters y setters
-public int get_id() {
-    return id;
-}
-public void set_id(int id) {
-    this.id = id;
-}
 public String get_nombre() {
     return nombre;
 }
@@ -61,14 +51,11 @@ public void set_horario(String horario) {
 @Override
 public String toString() {
 return "Empleado{" +
-                "id=" + id +
                 ", nombre='" + nombre + '\'' +
                 ", tipo='" + tipo + '\'' +
                 ", cargo='" + cargo + '\'' +
                 ", salario=" + salario +
                 ", horario='" + horario + '\'' +
-                ", activo=" + activo +
-                ", oculto=" + oculto +
                 '}';
     }
 }

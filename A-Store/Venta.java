@@ -3,28 +3,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Venta {
+public class Venta extends Entidad {
 
-    private final int id;
     private String fecha;
     private String hora;
     private String metodo_pago;
-    private boolean oculto;
     private float subtotal;
     private float total;
     private final List<DetalleVenta> productos_venta;
     private final Map<String, Float> descuentos;
     private final Map<String, Float> impuestos;
     public Venta(int id) {
-        this.id = id;
+        super(id);
         this.productos_venta = new ArrayList<>();
         this.descuentos = new HashMap<>();
         this.impuestos = new HashMap<>();
         this.subtotal = 0.0f;
         this.total = 0.0f;
-    }
-    public int get_id() {
-        return this.id;
     }
     public void agregar_productos(DetalleVenta producto) {
         this.productos_venta.add(producto);
@@ -98,11 +93,5 @@ public class Venta {
     }
     public void set_metodo_pago(String nuevo_metodo) {
         this.metodo_pago = nuevo_metodo;
-    }
-    public boolean get_oculto() {
-        return this.oculto;
-    }
-    public void set_oculto(boolean oculto) {
-        this.oculto = oculto;
     }
 }

@@ -1,31 +1,14 @@
-public class Proveedor {
-    private final int id; 
+public class Proveedor extends Entidad{
     private String nombre; 
     private String contacto; 
     private String ubicacion; 
-    private boolean oculto; 
 
-    //constructor completp 
+    //constructor completo
     public Proveedor(int id, String nombre, String contacto, String ubicacion){
-        this.id = id; 
+        super(id); 
         this.nombre = nombre; 
         this.contacto = contacto; 
         this.ubicacion = ubicacion; 
-        this.oculto = false; //no esta oculto por defecto
-    }
-
-    //constuctor simulando valores por defecto 
-    public Proveedor(int id, String nombre){
-        this.id = id; 
-        this.nombre = nombre; 
-        this.contacto = ""; 
-        this.ubicacion = ""; 
-        this.oculto = false; 
-    } 
-
-    //ID 
-    public int get_id() {
-        return id;
     }
 
     //Nombre 
@@ -53,14 +36,5 @@ public class Proveedor {
 
     public void set_ubicacion(String ubicacion) {
         this.ubicacion = ubicacion; 
-    }
-
-    //oculto 
-    public boolean get_oculto() {
-        return oculto; 
-    }
-
-    public void set_oculto(boolean oculto) {
-        this.oculto = oculto; 
     }
 }
