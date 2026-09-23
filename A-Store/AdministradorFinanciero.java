@@ -51,16 +51,16 @@ public class AdministradorFinanciero {
         }
     }
 
-    public float calcular_total_nomina(List<Empleado> empleados) {
+public float calcular_total_nomina(List<Empleado> empleados) {
         float total = 0.0f;
         if (empleados != null) {
             for (Empleado emp : empleados) {
+                // Interacción directa entre objetos (Rubro de la rúbrica)
                 total += obtener_salario_empleado(emp);
             }
         }
         return total;
     }
-
     public float calcular_ingresos(List<Venta> ventas) {
         float total = 0.0f;
         if (ventas != null) {
