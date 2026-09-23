@@ -1,0 +1,110 @@
+{
+    "AdministradorFinanciero": [
+        {
+            "id": 1,
+            "costos_mantenimiento": 0.0,
+            "servicios": 0.0,
+            "otros_gastos": 0.0,
+            "ingreso_total": 0.0
+        }
+    ],
+    "DetalleVenta": [
+        {
+            "id": 1,
+            "producto_id": 1,
+            "variante": {
+                "color": "negro",
+                "tamaño": "grande"
+            },
+            "cantidad": 2,
+            "precio_unitario": 200.0,
+            "subtotal_linea": 400.0
+        }
+    ],
+    "Empleado": [
+        {
+            "id": 1,
+            "nombre": "juan",
+            "tipo": "becario",
+            "cargo": "cajero",
+            "salario": 100.0,
+            "horario": "Todos los días. 7am-2pm",
+            "oculto": false
+        }
+    ],
+    "Inventario": [
+        {
+            "id": 1,
+            "productos": [
+                {
+                    "producto_id": 1, 
+                    "existencias": [
+                        {
+                            "variante": {
+                                "color": "negro",
+                                "tamaño": "grande"
+                            },
+                            "existencias": 3
+                        },
+                        {
+                            "variante": {
+                                "color": "negro",
+                                "tamaño": "chico"
+                            },
+                            "existencias": 5
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "Producto": [
+        {
+            "id": 1,
+            "nombre": "termo",
+            "descripcion": "un termo",
+            "categorias": ["botella", "fisico"],
+            "variantes": [
+                {"color": "naranja", "tamaño": "grande"},
+                {"color": "naranja", "tamaño": "chico"},
+                {"color": "negro", "tamaño": "grande"},
+                {"color": "negro", "tamaño": "chico"}],
+            "coste_compra": 55.0,
+            "precio_venta": 200.0,
+            "proveedores": [1],
+            "oculto": false
+        }
+    ],
+    "Proveedor": [
+        {
+            "id": 1,
+            "nombre": "fabrica china generica",
+            "contacto": "fabricachinagenerica@gmail.com",
+            "ubicacion": "china",
+            "oculto": false
+        }
+    ],
+    "Venta": [
+        {
+            "id": 1,
+            "fecha": "23-09-2026",
+            "hora": "12-21-54",
+            "metodo_pago": "efectivo",
+            "subtotal": 400.0,
+            "total": 464.0,
+            "productos_venta": [1],
+            "descuentos": {},
+            "impuestos": {"iva": 0.16},
+            "oculto": false
+        }
+    ],
+    "ids_globales": {
+        "AdministradorFinanciero": [1],
+        "DetalleVenta": [1],
+        "Empleado": [1],
+        "Inventario": [1],
+        "Producto": [1],
+        "Proveedor": [1],
+        "Venta": [1]
+    }
+}
