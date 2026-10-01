@@ -1,4 +1,10 @@
 import java.util.*;
+import java.io.*;
+import java.lang.reflect.Type;
+
+//El error que no existe el paquete com es un falso negativo. Ignorar el error si el código compila.
+import com.google.gson.*;
+import com.google.gson.reflect.TypeToken;
 
 public class Tienda {
 
