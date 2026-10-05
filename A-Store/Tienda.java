@@ -8,28 +8,22 @@ public class Tienda {
     private final List<Proveedor> proveedores;
     private final List<Venta> ventas;
 
-    // Guarda las ID's usadas por cada clase, para evitar duplicidad
     private final Map<String, List<Integer>> ids_globales;
 
     public Tienda() {
+        ids_globales = new HashMap<>();
+        
         empleados = new ArrayList<>();
         inventario = new Inventario(generador_id("Inventario"));
         administrador_financiero = new AdministradorFinanciero(generador_id("AdministradorFinanciero"), 0, 0, 0);
         proveedores = new ArrayList<>();
         ventas = new ArrayList<>();
-        ids_globales = new HashMap<>();
     }
 
-    //public void guardar_datos() {}
-
-    //public static Tienda cargar_datos() {}
-
     public final int generador_id(String class_name) {
-
         ids_globales.putIfAbsent(class_name, new ArrayList<>());
 
         List<Integer> ids_usados = ids_globales.get(class_name);
-
         int nuevo_id;
 
         if (ids_usados.isEmpty()) {
@@ -39,38 +33,17 @@ public class Tienda {
         }
 
         ids_usados.add(nuevo_id);
-
         return nuevo_id;
     }
 
-    //GETTERS
+    // GETTERS
+    public List<Empleado> get_empleados() { return empleados; }
+    public Inventario get_inventario() { return inventario; }
+    public AdministradorFinanciero get_administrador_financiero() { return administrador_financiero; }
+    public List<Proveedor> get_proveedores() { return proveedores; }
+    public List<Venta> get_ventas() { return ventas; }
 
-    public List<Empleado> get_empleados() {
-        return empleados;
-    }
-
-
-    public Inventario get_inventario() {
-        return inventario;
-    }
-
-
-    public AdministradorFinanciero get_administrador_financiero() {
-        return administrador_financiero;
-    }
-
-
-    public List<Proveedor> get_proveedores() {
-        return proveedores;
-    }
-
-
-    public List<Venta> get_ventas() {
-        return ventas;
-    }
-
-//PRODUCTO
-
+    // PRODUCTO
     public Map<String, Object> agregar_producto(String nombre, String descripcion, float coste_compra, float precio_venta) {
         Map<String, Object> result = new HashMap<>();
         
@@ -80,7 +53,6 @@ public class Tienda {
             return result;
         }
 
-        // Redondear a 2 decimales
         coste_compra = Math.round(coste_compra * 100.0f) / 100.0f;
         precio_venta = Math.round(precio_venta * 100.0f) / 100.0f;
 
@@ -133,9 +105,7 @@ public class Tienda {
         return result;
     }
 
-
-    //PROVEEDOR
-
+    // PROVEEDOR
     public Map<String, Object> agregar_proveedor(String nombre, String contacto, String ubicacion) {
         int id = generador_id("Proveedor");
         Proveedor nuevo_proveedor = new Proveedor(id, nombre, contacto, ubicacion);
@@ -184,9 +154,7 @@ public class Tienda {
         return result;
     }
 
-
-    //EMPLEADOS
-
+    // EMPLEADOS
     public Map<String, Object> agregar_empleado(String nombre, String tipo, String cargo, float salario, String horario) {
         Map<String, Object> result = new HashMap<>();
         
@@ -253,9 +221,7 @@ public class Tienda {
         return result;
     }
 
-
-    //VENTAS
-
+    // VENTAS
     public Map<String, Object> agregar_venta(String fecha, String hora) {
         int id = generador_id("Venta");
         Venta nueva_venta = new Venta(id);
@@ -302,5 +268,18 @@ public class Tienda {
             result.put("mensaje", "Venta anulada (ocultada) exitosamente.");
         }
         return result;
+    }
+
+    public Map<String, Object> agregar_stock_a_producto(int id_producto, Map<String, Object> variante, int cantidad) {
+        Map<String, Object> result_busqueda = buscar_producto(id_producto);
+        if ((boolean) result_busqueda.get("exito")) {
+            Producto p = (Producto) result_busqueda.get("producto");
+            return inventario.agregar_existencias(p, variante, cantidad);
+        }
+        return result_busqueda;
+    }
+
+    public void actualizar_finanzas() {
+        administrador_financiero.calcular_ingresos(this.ventas);
     }
 }
