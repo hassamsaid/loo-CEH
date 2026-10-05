@@ -18,7 +18,7 @@ public class AdministradorFinanciero {
         this.ingreso_total = 0.0f; 
     }
 
-    // Getters y Setters
+    // Getters y setters
     public int get_id() { return id; }
 
     public float get_costos_mantenimiento() { return costos_mantenimiento; }
@@ -33,34 +33,19 @@ public class AdministradorFinanciero {
     public float get_ingreso_total() { return ingreso_total; }
     public void set_ingreso_total(float ingreso_total) { this.ingreso_total = ingreso_total; }
 
-
-    // Métodos de cálculo 
-    private float obtener_salario_empleado(Empleado emp) {
-        if (emp == null) {
-            return 0.0f;
-        }
-
-        try {
-            return ((Number) emp.getClass().getMethod("get_salario").invoke(emp)).floatValue();
-        } catch (NoSuchMethodException | IllegalAccessException | java.lang.reflect.InvocationTargetException e) {
-            try {
-                return ((Number) emp.getClass().getMethod("getSalario").invoke(emp)).floatValue();
-            } catch (NoSuchMethodException | IllegalAccessException | java.lang.reflect.InvocationTargetException e2) {
-                return 0.0f;
-            }
-        }
-    }
-
-public float calcular_total_nomina(List<Empleado> empleados) {
+    // Metodos 
+    public float calcular_total_nomina(List<Empleado> empleados) {
         float total = 0.0f;
         if (empleados != null) {
             for (Empleado emp : empleados) {
-                // Interacción directa entre objetos (Rubro de la rúbrica)
-                total += obtener_salario_empleado(emp);
+                if (emp != null) {
+                    total += emp.get_salario(); // Llamada directa sin cosas raras
+                }
             }
         }
         return total;
     }
+
     public float calcular_ingresos(List<Venta> ventas) {
         float total = 0.0f;
         if (ventas != null) {
