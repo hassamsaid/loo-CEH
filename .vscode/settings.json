@@ -1,0 +1,9 @@
+{
+    "java.project.sourcePaths": [
+        "A-Store"
+    ],
+    "java.jdt.ls.javac.enabled": "off",
+    "java.project.referencedLibraries": [
+        "A-Store/lib/**/*.jar"
+    ]
+}

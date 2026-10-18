@@ -1,4 +1,3 @@
-import java.util.HashMap;
 import java.util.Map;
 
 public class DetalleVenta {
@@ -14,7 +13,7 @@ public class DetalleVenta {
         this.id = id;
         this.producto = producto;
         this.cantidad = cantidad;
-        this.variante = new HashMap<>(); 
+        this.variante = variante; 
         this.precio_unitario = precio_unitario;
         
         this.calcular_subtotal_linea(); 
