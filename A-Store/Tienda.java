@@ -118,7 +118,6 @@ public class Tienda {
                     "producto_id",
                     detalle.get_producto().get_id()
                 );
-                System.out.println("Variante para detalle venta: " + GSON.toJsonTree(detalle.get_variante()));
                 detalle_json.add(
                     "variante",
                     GSON.toJsonTree(detalle.get_variante())
