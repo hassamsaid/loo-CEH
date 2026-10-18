@@ -11,6 +11,7 @@ public class Empleado extends Entidad {
         super(id);
         this.nombre = nombre;
         this.tipo = tipo;
+        this.cargo = cargo;
         this.salario = salario;
         this.horario = horario;
 
