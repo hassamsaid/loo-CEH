@@ -17,18 +17,25 @@ public class Tienda {
     // Guarda las ID's usadas por cada clase, para evitar duplicidad
     private final Map<String, List<Integer>> ids_globales;
 
+    public static void main(String[] args) {
+
+        Tienda tienda = new Tienda();
+        tienda.cargar_datos();
+        
+    }
+
     public Tienda() {
+        ids_globales = new HashMap<>();
         empleados = new ArrayList<>();
         inventario = new Inventario(generador_id("Inventario"));
         administrador_financiero = new AdministradorFinanciero(generador_id("AdministradorFinanciero"), 0, 0, 0);
         proveedores = new ArrayList<>();
         ventas = new ArrayList<>();
-        ids_globales = new HashMap<>();
     }
 
     // DATOS
 
-    private static final String ARCHIVO_DATOS = "datos.json";
+    private static final String ARCHIVO_DATOS = "A-Store\\database.json";
 
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
@@ -36,13 +43,17 @@ public class Tienda {
 
         JsonObject datos = new JsonObject();
 
-        datos.add("AdministradorFinanciero", guardar_administrador_financiero());
+        JsonArray administrador_json = new JsonArray();
+        administrador_json.add(guardar_administrador_financiero());
+        datos.add("AdministradorFinanciero", administrador_json);
 
         datos.add("DetalleVenta", guardar_detalle_venta());
 
         datos.add("Empleado", guardar_empleado());
 
-        datos.add("Inventario", guardar_inventario());
+        JsonArray inventario_json = new JsonArray();
+        inventario_json.add(guardar_inventario());
+        datos.add("Inventario", inventario_json);
 
         datos.add("Producto", guardar_producto());
 
@@ -108,6 +119,7 @@ public class Tienda {
                     "producto_id",
                     detalle.get_producto().get_id()
                 );
+                System.out.println("Variante para detalle venta: " + GSON.toJsonTree(detalle.get_variante()));
                 detalle_json.add(
                     "variante",
                     GSON.toJsonTree(detalle.get_variante())
@@ -402,7 +414,7 @@ public class Tienda {
 
     public void cargar_datos() {
 
-        File archivo = new File("datos.json");
+        File archivo = new File(ARCHIVO_DATOS);
 
         if (!archivo.exists()) {return;}
 
@@ -426,7 +438,8 @@ public class Tienda {
             ventas.clear();
             ventas.addAll(cargar_venta(datos.getAsJsonArray("Venta"), detalles_por_id));
 
-            ids_globales = cargar_ids_globales(datos.getAsJsonObject("ids_globales"));
+            ids_globales.clear();
+            ids_globales.putAll(cargar_ids_globales(datos.getAsJsonObject("ids_globales")));
 
         } catch (IOException e) {
             System.out.println("Error al cargar datos: " + e.getMessage());
@@ -446,7 +459,7 @@ public class Tienda {
             administrador_json.get("otros_gastos").getAsFloat()
         );
 
-        administrador_financiero.set_ingreso_total(administrador_json.get("ingresos_total").getAsFloat());
+        administrador_financiero.set_ingreso_total(administrador_json.get("ingreso_total").getAsFloat());
 
         return administrador_financiero;
     }
@@ -457,7 +470,7 @@ public class Tienda {
 
         if (detalles_json == null) {return detalles_cargados;}
 
-        Type tipo_variante = new TypeToken<Map<String, Object>>() {}.getType();
+        Type tipo_variante = new TypeToken<Map<String, String>>() {}.getType();
 
         for (JsonElement elemento : detalles_json) {
 
@@ -483,6 +496,7 @@ public class Tienda {
             );
 
             detalles_cargados.put(detalle.get_id(), detalle);
+            System.out.println("Variante leída: " + variante);
         }
 
         return detalles_cargados;
@@ -687,12 +701,12 @@ public class Tienda {
                 venta.agregar_productos(detalle);
             }
 
-            for (Map<String, Float> descuento : descuentos) {
-                venta.agregar_descuento(descuento_key, descuento_value);
+            for (Map.Entry<String, Float> descuento : descuentos.entrySet()) {
+                venta.agregar_descuento(descuento.getKey(), descuento.getValue());
             }
 
-            for (Map<String, Float> impuesto : impuestos) {
-                venta.agregar_impuesto(impuesto_key, impuesto_value);
+            for (Map.Entry<String, Float> impuesto : impuestos.entrySet()) {
+                venta.agregar_impuesto(impuesto.getKey(), impuesto.getValue());
             }
 
             venta.set_fecha(venta_json.get("fecha").getAsString());
@@ -707,6 +721,15 @@ public class Tienda {
         }
 
         return ventas_cargadas;
+    }
+
+    public Map<String, List<Integer>> cargar_ids_globales(JsonObject ids_json) {
+
+        if (ids_json == null) {return new HashMap<>();}
+
+        Type tipo_ids = new TypeToken<Map<String, List<Integer>>>() {}.getType();
+
+        return GSON.fromJson(ids_json, tipo_ids);
     }
 
     public final int generador_id(String class_name) {
