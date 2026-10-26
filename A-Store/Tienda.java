@@ -125,7 +125,7 @@ public class Tienda {
 
     // DATOS
 
-    private static final String ARCHIVO_DATOS = "A-Store\\database.json";
+    private static final String ARCHIVO_DATOS = "A-Store" + File.separator + "database.json";
 
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
