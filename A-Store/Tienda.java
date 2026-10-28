@@ -19,8 +19,99 @@ public class Tienda {
     public static void main(String[] args) {
 
         Tienda tienda = new Tienda();
+        System.out.println("Cargando base de datos...");
         tienda.cargar_datos();
-        
+
+        Scanner scanner = new Scanner(System.in);
+        int opcion = 0;
+
+        while (opcion != 6) {
+            System.out.println("\n=================================");
+            System.out.println("    SISTEMA A-STORE (TERMINAL)   ");
+            System.out.println("=================================");
+            System.out.println("1. Agregar Empleado");
+            System.out.println("2. Agregar Proveedor");
+            System.out.println("3. Agregar Producto");
+            System.out.println("4. Mostrar Resumen de Tienda");
+            System.out.println("5. Guardar Datos Manualmente");
+            System.out.println("6. Guardar y Salir");
+            System.out.print("Selecciona una opción: ");
+
+            try {
+                opcion = Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Error: Ingresa un número válido.");
+                continue;
+            }
+
+            switch (opcion) {
+                case 1:
+                    System.out.println("\n-- NUEVO EMPLEADO --");
+                    System.out.print("Nombre: ");
+                    String nombreEmp = scanner.nextLine();
+                    System.out.print("Tipo (ej. Vendedor): ");
+                    String tipoEmp = scanner.nextLine();
+                    System.out.print("Cargo: ");
+                    String cargoEmp = scanner.nextLine();
+                    System.out.print("Salario: ");
+                    float salarioEmp = Float.parseFloat(scanner.nextLine());
+                    System.out.print("Horario (ej. 9-5): ");
+                    String horarioEmp = scanner.nextLine();
+                    
+                    Map<String, Object> resEmp = tienda.agregar_empleado(nombreEmp, tipoEmp, cargoEmp, salarioEmp, horarioEmp);
+                    System.out.println("-> " + resEmp.get("mensaje"));
+                    break;
+
+                case 2:
+                    System.out.println("\n-- NUEVO PROVEEDOR --");
+                    System.out.print("Nombre: ");
+                    String nombreProv = scanner.nextLine();
+                    System.out.print("Contacto: ");
+                    String contactoProv = scanner.nextLine();
+                    System.out.print("Ubicación: ");
+                    String ubicacionProv = scanner.nextLine();
+
+                    Map<String, Object> resProv = tienda.agregar_proveedor(nombreProv, contactoProv, ubicacionProv);
+                    System.out.println("-> " + resProv.get("mensaje"));
+                    break;
+
+                case 3:
+                    System.out.println("\n-- NUEVO PRODUCTO --");
+                    System.out.print("Nombre: ");
+                    String nombreProd = scanner.nextLine();
+                    System.out.print("Descripción: ");
+                    String descProd = scanner.nextLine();
+                    System.out.print("Coste de compra: ");
+                    float costeProd = Float.parseFloat(scanner.nextLine());
+                    System.out.print("Precio de venta: ");
+                    float precioProd = Float.parseFloat(scanner.nextLine());
+
+                    Map<String, Object> resProd = tienda.agregar_producto(nombreProd, descProd, costeProd, precioProd);
+                    System.out.println("-> " + resProd.get("mensaje"));
+                    break;
+
+                case 4:
+                    System.out.println("\n-- RESUMEN A-STORE --");
+                    System.out.println("Empleados registrados: " + tienda.get_empleados().size());
+                    System.out.println("Proveedores registrados: " + tienda.get_proveedores().size());
+                    System.out.println("Productos en inventario: " + tienda.get_inventario().get_productos().size());
+                    break;
+
+                case 5:
+                    tienda.guardar_datos();
+                    break;
+
+                case 6:
+                    System.out.println("Guardando información antes de salir...");
+                    tienda.guardar_datos();
+                    System.out.println("¡Hasta luego!");
+                    break;
+
+                default:
+                    System.out.println("Opción no reconocida. Intenta de nuevo.");
+            }
+        }
+        scanner.close();
     }
 
     public Tienda() {
@@ -34,7 +125,7 @@ public class Tienda {
 
     // DATOS
 
-    private static final String ARCHIVO_DATOS = "A-Store\\database.json";
+    private static final String ARCHIVO_DATOS = "A-Store" + File.separator + "database.json";
 
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
