@@ -715,7 +715,7 @@ public class Tienda {
             for (Proveedor proveedor : proveedores_producto) {
                 producto.agregar_proveedor(proveedor);
             }
-
+        
             producto.set_oculto(producto_json.get("oculto").getAsBoolean());
 
             productos_cargados.put(producto.get_id(), producto);
@@ -859,7 +859,14 @@ public class Tienda {
 
         int id = generador_id("Producto");
         Producto nuevo_producto = new Producto(id, nombre, descripcion, coste_compra, precio_venta);
-        return inventario.agregar_producto(nuevo_producto);
+        
+        Map<String, Object> resultadoInventario = inventario.agregar_producto(nuevo_producto);
+        
+        if ((boolean) resultadoInventario.get("exito")) {
+            resultadoInventario.put("mensaje", "Producto agregado exitosamente al inventario.");
+        }
+        
+        return resultadoInventario;
     }
 
     public Map<String, Object> buscar_producto(int id) {
