@@ -25,18 +25,19 @@ public class Tienda {
         Scanner scanner = new Scanner(System.in);
         int opcion = 0;
 
-        while (opcion != 6) {
+        while (opcion != 7) {
             System.out.println("\n=================================");
             System.out.println("    SISTEMA A-STORE (TERMINAL)   ");
             System.out.println("=================================");
             System.out.println("1. Agregar Empleado");
             System.out.println("2. Agregar Proveedor");
             System.out.println("3. Agregar Producto");
-            System.out.println("4. Agregar Stock a Producto");
-            System.out.println("5. Ver FInanzas y utilidad");
-            System.out.println("6. Mostrar Resumen de Tienda");
-            System.out.println("7. Guardar Datos Manualmente");
-            System.out.println("8. Guardar y Salir");
+            System.out.println("4. Buscar");
+            System.out.println("5. Agregar Stock a Producto");
+            System.out.println("6. Ver FInanzas y utilidad");
+            System.out.println("7. Mostrar Resumen de Tienda");
+            System.out.println("8. Guardar Datos Manualmente");
+            System.out.println("9. Guardar y Salir");
             System.out.print("Selecciona una opción: ");
 
             try {
@@ -93,6 +94,133 @@ public class Tienda {
                     break;
 
                 case 4:
+                    System.out.println("\n-- BUSCAR --");
+                    System.out.println("1. Empleado");
+                    System.out.println("2. Proveedor");
+                    System.out.println("3. Producto");
+                    System.out.println("4. Venta");
+                    System.out.print("Selecciona qué quieres buscar: ");
+
+                    int tipoBusqueda;
+
+                    try {
+                        tipoBusqueda = Integer.parseInt(scanner.nextLine());
+                    } catch (NumberFormatException e) {
+                        System.out.println("Opción inválida.");
+                        break;
+                    }
+
+                    System.out.print("Buscar: ");
+                    String busqueda = scanner.nextLine();
+
+                    switch (tipoBusqueda) {
+                        case 1:
+                            List<Empleado> empleados_encontrados = tienda.buscar_empleado(busqueda);
+
+                            if (empleados_encontrados.isEmpty()) {
+                                System.out.println("No se encontraron empleados.");
+                                break;
+                            }
+
+                            System.out.println("\nID | Nombre | Tipo | Cargo | Salario | Horario");
+                            System.out.println("------------------------------------------------------------");
+
+                            for (Empleado empleado : empleados_encontrados) {
+                                System.out.println(
+                                    empleado.get_id() + " | " +
+                                    empleado.get_nombre() + " | " +
+                                    empleado.get_tipo() + " | " +
+                                    empleado.get_cargo() + " | $" +
+                                    empleado.get_salario() + " | " +
+                                    empleado.get_horario()
+                                );
+                            }
+                            break;
+
+                        case 2:
+                            List<Proveedor> proveedores_encontrados = tienda.buscar_proveedor(busqueda);
+
+                            if (proveedores_encontrados.isEmpty()) {
+                                System.out.println("No se encontraron proveedores.");
+                                break;
+                            }
+
+                            System.out.println("\nID | Nombre | Contacto | Ubicación");
+                            System.out.println("------------------------------------------------------------");
+
+                            for (Proveedor proveedor : proveedores_encontrados) {
+                                System.out.println(
+                                    proveedor.get_id() + " | " +
+                                    proveedor.get_nombre() + " | " +
+                                    proveedor.get_contacto() + " | " +
+                                    proveedor.get_ubicacion()
+                                );
+                            }
+                            break;
+
+                        case 3:
+                            List<Producto> productos_encontrados = tienda.buscar_producto(busqueda);
+
+                            if (productos_encontrados.isEmpty()) {
+                                System.out.println("No se encontraron productos.");
+                                break;
+                            }
+
+                            System.out.println("\nID | Nombre | Descripción | Coste | Precio");
+                            System.out.println("------------------------------------------------------------");
+
+                            for (Producto producto : productos_encontrados) {
+                                System.out.println(
+                                    producto.get_id() + " | " +
+                                    producto.get_nombre() + " | " +
+                                    producto.get_descripcion() + " | $" +
+                                    producto.get_coste_compra() + " | $" +
+                                    producto.get_precio_venta()
+                                );
+
+                                System.out.println(
+                                    "   Categorías: " + producto.get_categorias() +
+                                    " | Variantes: " + producto.get_variantes() +
+                                    " | Num. Proveedores: " + producto.get_proveedores().size()
+                                );
+                            }
+                            break;
+
+                        case 4:
+                            List<Venta> ventas_encontradas = tienda.buscar_venta(busqueda);
+
+                            if (ventas_encontradas.isEmpty()) {
+                                System.out.println("No se encontraron ventas.");
+                                break;
+                            }
+
+                            System.out.println("\nID | Fecha | Hora | Método | Subtotal | Total");
+                            System.out.println("------------------------------------------------------------");
+
+                            for (Venta venta : ventas_encontradas) {
+                                System.out.println(
+                                    venta.get_id() + " | " +
+                                    venta.get_fecha() + " | " +
+                                    venta.get_hora() + " | " +
+                                    venta.get_metodo_pago() + " | $" +
+                                    venta.get_subtotal() + " | $" +
+                                    venta.get_total()
+                                );
+
+                                System.out.println(
+                                    "   Productos: " + venta.get_productos_venta().size() +
+                                    " | Descuentos: " + venta.get_descuentos() +
+                                    " | Impuestos: " + venta.get_impuestos()
+                                );
+                            }
+                            break;
+
+                        default:
+                            System.out.println("Opción no reconocida.");
+                    }
+                    break;
+
+                case 5:
                     System.out.println("\n-- AGREGAR STOCK A PRODUCTO --");
                     System.out.print("ID del producto: ");
                     int idProdStock = Integer.parseInt(scanner.nextLine());
@@ -111,7 +239,7 @@ public class Tienda {
                     System.out.println("-> " + resStock.get("mensaje"));
                     break;
 
-                case 5:
+                case 6:
                     System.out.println("\n-- REPORTE FINANCIERO --");
                     AdministradorFinanciero admin = tienda.get_administrador_financiero();
                     float nomina = admin.calcular_total_nomina(tienda.get_empleados());
@@ -123,18 +251,18 @@ public class Tienda {
                     System.out.println("Utilidad neta: $" + utilidad);
                     break;
 
-                case 6:
+                case 7:
                     System.out.println("\n-- RESUMEN A-STORE --");
                     System.out.println("Empleados registrados: " + tienda.get_empleados().size());
                     System.out.println("Proveedores registrados: " + tienda.get_proveedores().size());
                     System.out.println("Productos en inventario: " + tienda.get_inventario().get_productos().size());
                     break;
 
-                case 7:
+                case 8:
                     tienda.guardar_datos();
                     break;
 
-                case 8:
+                case 9:
                     System.out.println("Guardando información antes de salir...");
                     tienda.guardar_datos();
                     System.out.println("¡Hasta luego!");
@@ -902,22 +1030,61 @@ public class Tienda {
         return resultadoInventario;
     }
 
-    public Map<String, Object> buscar_producto(int id) {
-        Map<String, Object> result = new HashMap<>();
-        for (Producto p : inventario.get_productos().keySet()) {
-            if (p.get_id() == id) {
-                result.put("exito", true);
-                result.put("producto", p);
-                return result;
+    public List<Producto> buscar_producto(String busqueda) {
+        List<Producto> resultados = new ArrayList<>();
+
+        try {
+            int id = Integer.parseInt(busqueda);
+            for (Producto producto : inventario.get_productos().keySet()) {
+                if (producto.get_id() == id && !producto.get_oculto()) resultados.add(producto);
+            }
+            return resultados;
+        } catch (NumberFormatException e) {}
+
+        busqueda = busqueda.toLowerCase();
+
+        for (Producto producto : inventario.get_productos().keySet()) {
+            if (!producto.get_oculto() && producto.get_nombre().toLowerCase().equals(busqueda)) resultados.add(producto);
+        }
+
+        for (Producto producto : inventario.get_productos().keySet()) {
+            if (
+                !producto.get_oculto() &&
+                !resultados.contains(producto) &&
+                producto.get_nombre().toLowerCase().startsWith(busqueda)
+            ) resultados.add(producto);
+        }
+
+        for (Producto producto : inventario.get_productos().keySet()) {
+            if (
+                !producto.get_oculto() &&
+                !resultados.contains(producto) &&
+                producto.get_nombre().toLowerCase().contains(busqueda)
+            ) resultados.add(producto);
+        }
+
+        for (Producto producto : inventario.get_productos().keySet()) {
+            if (producto.get_oculto() || resultados.contains(producto)) continue;
+
+            if (producto.get_descripcion().toLowerCase().contains(busqueda)) {
+                resultados.add(producto);
+                continue;
+            }
+
+            for (String categoria : producto.get_categorias()) {
+                if (categoria.toLowerCase().contains(busqueda)) {
+                    resultados.add(producto);
+                    break;
+                }
             }
         }
-        result.put("exito", false);
-        result.put("mensaje", "Producto no encontrado.");
-        return result;
+
+        return resultados;
     }
 
     public Map<String, Object> modificar_producto(int id, String nombre, String descripcion, float coste_compra, float precio_venta) {
-        Map<String, Object> result = buscar_producto(id);
+        List<Producto> productos = buscar_producto(Integer.toString(id));
+        Map<String, Object> result = new HashMap<>();
         
         if (coste_compra <= 0 || precio_venta <= 0) {
             result.put("exito", false);
@@ -925,23 +1092,26 @@ public class Tienda {
             return result;
         }
 
-        if ((boolean) result.get("exito")) {
-            Producto p = (Producto) result.get("producto");
+        if (productos.size() > 0) {
+            Producto p = productos.get(0);
             p.set_nombre(nombre);
             p.set_descripcion(descripcion);
             p.set_coste_compra(Math.round(coste_compra * 100.0f) / 100.0f);
             p.set_precio_venta(Math.round(precio_venta * 100.0f) / 100.0f);
             result.put("mensaje", "Producto modificado exitosamente.");
+            result.put("exito", true);
         }
         return result;
     }
 
     public Map<String, Object> ocultar_producto(int id) {
-        Map<String, Object> result = buscar_producto(id);
-        if ((boolean) result.get("exito")) {
-            Producto p = (Producto) result.get("producto");
+        List<Producto> productos = buscar_producto(Integer.toString(id));
+        Map<String, Object> result = new HashMap<>();
+        if (productos.size() > 0) {
+            Producto p = productos.get(0);
             p.set_oculto(true);
             result.put("mensaje", "Producto ocultado exitosamente.");
+            result.put("exito", true);
         }
         return result;
     }
@@ -959,38 +1129,77 @@ public class Tienda {
         return result;
     }
 
-    public Map<String, Object> buscar_proveedor(int id) {
-        Map<String, Object> result = new HashMap<>();
-        for (Proveedor prov : proveedores) {
-            if (prov.get_id() == id) {
-                result.put("exito", true);
-                result.put("proveedor", prov);
-                return result;
+    public List<Proveedor> buscar_proveedor(String busqueda) {
+        List<Proveedor> resultados = new ArrayList<>();
+
+        try {
+            int id = Integer.parseInt(busqueda);
+            for (Proveedor proveedor : proveedores) {
+                if (proveedor.get_id() == id && !proveedor.get_oculto()) resultados.add(proveedor);
             }
+            return resultados;
+        } catch (NumberFormatException e) {}
+
+        busqueda = busqueda.toLowerCase();
+
+        for (Proveedor proveedor : proveedores) {
+            if (!proveedor.get_oculto() && proveedor.get_nombre().toLowerCase().equals(busqueda)) resultados.add(proveedor);
         }
-        result.put("exito", false);
-        result.put("mensaje", "Proveedor no encontrado.");
-        return result;
+
+        for (Proveedor proveedor : proveedores) {
+            if (
+                !proveedor.get_oculto() &&
+                !resultados.contains(proveedor) &&
+                proveedor.get_nombre().toLowerCase().startsWith(busqueda)
+            ) resultados.add(proveedor);
+        }
+
+        for (Proveedor proveedor : proveedores) {
+            if (
+                !proveedor.get_oculto() &&
+                !resultados.contains(proveedor) &&
+                proveedor.get_nombre().toLowerCase().contains(busqueda)
+            ) resultados.add(proveedor);
+        }
+
+        for (Proveedor proveedor : proveedores) {
+            if (
+                !proveedor.get_oculto() &&
+                !resultados.contains(proveedor) &&
+                (
+                    proveedor.get_contacto().toLowerCase().contains(busqueda) ||
+                    proveedor.get_ubicacion().toLowerCase().contains(busqueda)
+                )
+            ) resultados.add(proveedor);
+        }
+
+        return resultados;
     }
 
     public Map<String, Object> modificar_proveedor(int id, String nombre, String contacto, String ubicacion) {
-        Map<String, Object> result = buscar_proveedor(id);
-        if ((boolean) result.get("exito")) {
-            Proveedor prov = (Proveedor) result.get("proveedor");
+        List<Proveedor> proveedores = buscar_proveedor(Integer.toString(id));
+        Map<String, Object> result = new HashMap<>();
+
+        if (proveedores.size() > 0) {
+            Proveedor prov = proveedores.get(0);
             prov.set_nombre(nombre);
             prov.set_contacto(contacto);
             prov.set_ubicacion(ubicacion);
             result.put("mensaje", "Proveedor modificado exitosamente.");
+            result.put("exito", true);
         }
         return result;
     }
 
     public Map<String, Object> ocultar_proveedor(int id) {
-        Map<String, Object> result = buscar_proveedor(id);
+        List<Proveedor> proveedores = buscar_proveedor(Integer.toString(id));
+        Map<String, Object> result = new HashMap<>();
+
         if ((boolean) result.get("exito")) {
-            Proveedor prov = (Proveedor) result.get("proveedor");
+            Proveedor prov = proveedores.get(0);
             prov.set_oculto(true);
             result.put("mensaje", "Proveedor ocultado exitosamente.");
+            result.put("exito", true);
         }
         return result;
     }
@@ -1017,22 +1226,57 @@ public class Tienda {
         return result;
     }
 
-    public Map<String, Object> buscar_empleado(int id) {
-        Map<String, Object> result = new HashMap<>();
-        for (Empleado emp : empleados) {
-            if (emp.get_id() == id) {
-                result.put("exito", true);
-                result.put("empleado", emp);
-                return result;
+    public List<Empleado> buscar_empleado(String busqueda) {
+        List<Empleado> resultados = new ArrayList<>();
+
+        try {
+            int id = Integer.parseInt(busqueda);
+            for (Empleado empleado : empleados) {
+                if (empleado.get_id() == id && !empleado.get_oculto()) resultados.add(empleado);
             }
+            return resultados;
+        } catch (NumberFormatException e) {}
+
+        busqueda = busqueda.toLowerCase();
+
+        for (Empleado empleado : empleados) {
+            if (!empleado.get_oculto() && empleado.get_nombre().toLowerCase().equals(busqueda)) resultados.add(empleado);
         }
-        result.put("exito", false);
-        result.put("mensaje", "Empleado no encontrado.");
-        return result;
+
+        for (Empleado empleado : empleados) {
+            if (
+                !empleado.get_oculto() &&
+                !resultados.contains(empleado) &&
+                empleado.get_nombre().toLowerCase().startsWith(busqueda)
+            ) resultados.add(empleado);
+        }
+
+        for (Empleado empleado : empleados) {
+            if (
+                !empleado.get_oculto() &&
+                !resultados.contains(empleado) &&
+                empleado.get_nombre().toLowerCase().contains(busqueda)
+            ) resultados.add(empleado);
+        }
+
+        for (Empleado empleado : empleados) {
+            if (
+                !empleado.get_oculto() &&
+                !resultados.contains(empleado) &&
+                (
+                    empleado.get_tipo().toLowerCase().contains(busqueda) ||
+                    empleado.get_cargo().toLowerCase().contains(busqueda) ||
+                    empleado.get_horario().toLowerCase().contains(busqueda)
+                )
+            ) resultados.add(empleado);
+        }
+
+        return resultados;
     }
 
     public Map<String, Object> modificar_empleado(int id, String nombre, String tipo, String cargo, float salario, String horario) {
-        Map<String, Object> result = buscar_empleado(id);
+        List<Empleado> empleados = buscar_empleado(Integer.toString(id));
+        Map<String, Object> result = new HashMap<>();
         
         if (salario <= 0) {
             result.put("exito", false);
@@ -1040,24 +1284,28 @@ public class Tienda {
             return result;
         }
 
-        if ((boolean) result.get("exito")) {
-            Empleado emp = (Empleado) result.get("empleado");
+        if (empleados.size() > 0) {
+            Empleado emp = empleados.get(0);
             emp.set_nombre(nombre);
             emp.set_tipo(tipo);
             emp.set_cargo(cargo);
             emp.set_horario(horario);
             emp.set_salario(Math.round(salario * 100.0f) / 100.0f);
             result.put("mensaje", "Empleado modificado exitosamente.");
+            result.put("exito", true);
         }
         return result;
     }
 
     public Map<String, Object> ocultar_empleado(int id) {
-        Map<String, Object> result = buscar_empleado(id);
+        List<Empleado> empleados = buscar_empleado(Integer.toString(id));
+        Map<String, Object> result = new HashMap<>();
+
         if ((boolean) result.get("exito")) {
-            Empleado emp = (Empleado) result.get("empleado");
+            Empleado emp = empleados.get(0);
             emp.set_oculto(true);
             result.put("mensaje", "Empleado ocultado exitosamente.");
+            result.put("exito", true);
         }
         return result;
     }
@@ -1077,47 +1325,68 @@ public class Tienda {
         return result;
     }
 
-    public Map<String, Object> buscar_venta(int id) {
-        Map<String, Object> result = new HashMap<>();
-        for (Venta v : ventas) {
-            if (v.get_id() == id) {
-                result.put("exito", true);
-                result.put("venta", v);
-                return result;
+    public List<Venta> buscar_venta(String busqueda) {
+        List<Venta> resultados = new ArrayList<>();
+
+        try {
+            int id = Integer.parseInt(busqueda);
+            for (Venta venta : ventas) {
+                if (venta.get_id() == id && !venta.get_oculto()) resultados.add(venta);
             }
+            return resultados;
+        } catch (NumberFormatException e) {}
+
+        busqueda = busqueda.toLowerCase();
+
+        for (Venta venta : ventas) {
+            if (venta.get_oculto()) continue;
+
+            if (
+                venta.get_fecha().toLowerCase().contains(busqueda) ||
+                venta.get_hora().toLowerCase().contains(busqueda) ||
+                venta.get_metodo_pago().toLowerCase().contains(busqueda)
+            ) resultados.add(venta);
         }
-        result.put("exito", false);
-        result.put("mensaje", "Venta no encontrada.");
-        return result;
+
+        return resultados;
     }
 
     public Map<String, Object> modificar_venta(int id, String metodo_pago) {
-        Map<String, Object> result = buscar_venta(id);
-        if ((boolean) result.get("exito")) {
-            Venta v = (Venta) result.get("venta");
+        List<Venta> ventas = buscar_venta(Integer.toString(id));
+        Map<String, Object> result = new HashMap<>();
+        result.put("exito", false);
+
+        if (ventas.size() > 0) {
+            Venta v = ventas.get(0);
             v.set_metodo_pago(metodo_pago);
             result.put("mensaje", "Venta modificada exitosamente.");
+            result.put("exito", true);
         }
         return result;
     }
 
     public Map<String, Object> ocultar_venta(int id) {
-        Map<String, Object> result = buscar_venta(id);
-        if ((boolean) result.get("exito")) {
-            Venta v = (Venta) result.get("venta");
+        List<Venta> ventas = buscar_venta(Integer.toString(id));
+        Map<String, Object> result = new HashMap<>();
+
+        if (ventas.size() > 0) {
+            Venta v = ventas.get(0);
             v.set_oculto(true);
             result.put("mensaje", "Venta anulada (ocultada) exitosamente.");
+            result.put("exito", true);
         }
         return result;
     }
 
     public Map<String, Object> agregar_stock_a_producto(int id_producto, Map<String, Object> variante, int cantidad) {
-        Map<String, Object> result_busqueda = buscar_producto(id_producto);
-        if ((boolean) result_busqueda.get("exito")) {
-            Producto p = (Producto) result_busqueda.get("producto");
+        List<Producto> productos = buscar_producto(Integer.toString(id_producto));
+        Map<String, Object> result = new HashMap<>();
+        if (productos.size() > 0) {
+            Producto p = productos.get(0);
             return inventario.agregar_existencias(p, variante, cantidad);
         }
-        return result_busqueda;
+        result.put("exito", false);
+        return result;
     }
 
     public void actualizar_finanzas() {
