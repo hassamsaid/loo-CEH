@@ -33,9 +33,11 @@ public class Tienda {
             System.out.println("2. Agregar Proveedor");
             System.out.println("3. Agregar Producto");
             System.out.println("4. Buscar");
-            System.out.println("5. Mostrar Resumen de Tienda");
-            System.out.println("6. Guardar Datos Manualmente");
-            System.out.println("7. Guardar y Salir");
+            System.out.println("5. Agregar Stock a Producto");
+            System.out.println("6. Ver FInanzas y utilidad");
+            System.out.println("7. Mostrar Resumen de Tienda");
+            System.out.println("8. Guardar Datos Manualmente");
+            System.out.println("9. Guardar y Salir");
             System.out.print("Selecciona una opción: ");
 
             try {
@@ -219,17 +221,48 @@ public class Tienda {
                     break;
 
                 case 5:
+                    System.out.println("\n-- AGREGAR STOCK A PRODUCTO --");
+                    System.out.print("ID del producto: ");
+                    int idProdStock = Integer.parseInt(scanner.nextLine());
+                    System.out.print("Color de la variante (ej. negro): ");
+                    String colorVar = scanner.nextLine();
+                    System.out.print("Tamaño de la variante (ej. grande): ");
+                    String tamVar = scanner.nextLine();
+                    System.out.print("Cantidad a agregar: ");
+                    int cantStock = Integer.parseInt(scanner.nextLine());
+
+                    Map<String, Object> variante = new HashMap<>();
+                    variante.put("color", colorVar);
+                    variante.put("tamaño", tamVar);
+
+                    Map<String, Object> resStock = tienda.agregar_stock_a_producto(idProdStock, variante, cantStock);
+                    System.out.println("-> " + resStock.get("mensaje"));
+                    break;
+
+                case 6:
+                    System.out.println("\n-- REPORTE FINANCIERO --");
+                    AdministradorFinanciero admin = tienda.get_administrador_financiero();
+                    float nomina = admin.calcular_total_nomina(tienda.get_empleados());
+                    float ingresos = admin.calcular_ingresos(tienda.get_ventas());
+                    float utilidad = admin.calcular_utilidad(tienda.get_ventas(), tienda.get_empleados());
+                    
+                    System.out.println("Ingresos totales: $" + ingresos);
+                    System.out.println("Gastos de nómina: $" + nomina);
+                    System.out.println("Utilidad neta: $" + utilidad);
+                    break;
+
+                case 7:
                     System.out.println("\n-- RESUMEN A-STORE --");
                     System.out.println("Empleados registrados: " + tienda.get_empleados().size());
                     System.out.println("Proveedores registrados: " + tienda.get_proveedores().size());
                     System.out.println("Productos en inventario: " + tienda.get_inventario().get_productos().size());
                     break;
 
-                case 6:
+                case 8:
                     tienda.guardar_datos();
                     break;
 
-                case 7:
+                case 9:
                     System.out.println("Guardando información antes de salir...");
                     tienda.guardar_datos();
                     System.out.println("¡Hasta luego!");
@@ -843,7 +876,7 @@ public class Tienda {
             for (Proveedor proveedor : proveedores_producto) {
                 producto.agregar_proveedor(proveedor);
             }
-
+        
             producto.set_oculto(producto_json.get("oculto").getAsBoolean());
 
             productos_cargados.put(producto.get_id(), producto);
@@ -987,7 +1020,14 @@ public class Tienda {
 
         int id = generador_id("Producto");
         Producto nuevo_producto = new Producto(id, nombre, descripcion, coste_compra, precio_venta);
-        return inventario.agregar_producto(nuevo_producto);
+        
+        Map<String, Object> resultadoInventario = inventario.agregar_producto(nuevo_producto);
+        
+        if ((boolean) resultadoInventario.get("exito")) {
+            resultadoInventario.put("mensaje", "Producto agregado exitosamente al inventario.");
+        }
+        
+        return resultadoInventario;
     }
 
     public List<Producto> buscar_producto(String busqueda) {
