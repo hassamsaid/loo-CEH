@@ -32,9 +32,11 @@ public class Tienda {
             System.out.println("1. Agregar Empleado");
             System.out.println("2. Agregar Proveedor");
             System.out.println("3. Agregar Producto");
-            System.out.println("4. Mostrar Resumen de Tienda");
-            System.out.println("5. Guardar Datos Manualmente");
-            System.out.println("6. Guardar y Salir");
+            System.out.println("4. Agregar Stock a Producto");
+            System.out.println("5. Ver FInanzas y utilidad");
+            System.out.println("6. Mostrar Resumen de Tienda");
+            System.out.println("7. Guardar Datos Manualmente");
+            System.out.println("8. Guardar y Salir");
             System.out.print("Selecciona una opción: ");
 
             try {
@@ -91,17 +93,48 @@ public class Tienda {
                     break;
 
                 case 4:
+                    System.out.println("\n-- AGREGAR STOCK A PRODUCTO --");
+                    System.out.print("ID del producto: ");
+                    int idProdStock = Integer.parseInt(scanner.nextLine());
+                    System.out.print("Color de la variante (ej. negro): ");
+                    String colorVar = scanner.nextLine();
+                    System.out.print("Tamaño de la variante (ej. grande): ");
+                    String tamVar = scanner.nextLine();
+                    System.out.print("Cantidad a agregar: ");
+                    int cantStock = Integer.parseInt(scanner.nextLine());
+
+                    Map<String, Object> variante = new HashMap<>();
+                    variante.put("color", colorVar);
+                    variante.put("tamaño", tamVar);
+
+                    Map<String, Object> resStock = tienda.agregar_stock_a_producto(idProdStock, variante, cantStock);
+                    System.out.println("-> " + resStock.get("mensaje"));
+                    break;
+
+                case 5:
+                    System.out.println("\n-- REPORTE FINANCIERO --");
+                    AdministradorFinanciero admin = tienda.get_administrador_financiero();
+                    float nomina = admin.calcular_total_nomina(tienda.get_empleados());
+                    float ingresos = admin.calcular_ingresos(tienda.get_ventas());
+                    float utilidad = admin.calcular_utilidad(tienda.get_ventas(), tienda.get_empleados());
+                    
+                    System.out.println("Ingresos totales: $" + ingresos);
+                    System.out.println("Gastos de nómina: $" + nomina);
+                    System.out.println("Utilidad neta: $" + utilidad);
+                    break;
+
+                case 6:
                     System.out.println("\n-- RESUMEN A-STORE --");
                     System.out.println("Empleados registrados: " + tienda.get_empleados().size());
                     System.out.println("Proveedores registrados: " + tienda.get_proveedores().size());
                     System.out.println("Productos en inventario: " + tienda.get_inventario().get_productos().size());
                     break;
 
-                case 5:
+                case 7:
                     tienda.guardar_datos();
                     break;
 
-                case 6:
+                case 8:
                     System.out.println("Guardando información antes de salir...");
                     tienda.guardar_datos();
                     System.out.println("¡Hasta luego!");
