@@ -25,7 +25,7 @@ public class Tienda {
         Scanner scanner = new Scanner(System.in);
         int opcion = 0;
 
-        while (opcion != 7) {
+        while (opcion != 10) {
             System.out.println("\n=================================");
             System.out.println("    SISTEMA A-STORE (TERMINAL)   ");
             System.out.println("=================================");
@@ -36,8 +36,9 @@ public class Tienda {
             System.out.println("5. Agregar Stock a Producto");
             System.out.println("6. Ver FInanzas y utilidad");
             System.out.println("7. Mostrar Resumen de Tienda");
-            System.out.println("8. Guardar Datos Manualmente");
-            System.out.println("9. Guardar y Salir");
+            System.out.println("8. Borrar / Ocultar Objeto");
+            System.out.println("9. Guardar Datos Manualmente");
+            System.out.println("10. Guardar y Salir");
             System.out.print("Selecciona una opción: ");
 
             try {
@@ -259,10 +260,78 @@ public class Tienda {
                     break;
 
                 case 8:
-                    tienda.guardar_datos();
+                    System.out.println("\n-- SUBMENÚ DE ELIMINACIÓN --");
+                    System.out.println("1. Ocultar / Eliminar Empleado");
+                    System.out.println("2. Ocultar / Eliminar Proveedor");
+                    System.out.println("3. Ocultar / Eliminar Producto");
+                    System.out.println("4. Ocultar / Anular Venta");
+                    System.out.println("5. Reducir / Quitar Stock de Producto");
+                    System.out.println("6. Cancelar y Regresar");
+                    System.out.print("Selecciona qué deseas eliminar: ");
+
+                    int subOp;
+                    try {
+                        subOp = Integer.parseInt(scanner.nextLine());
+                    } catch (NumberFormatException e) {
+                        System.out.println("Opción inválida.");
+                        break;
+                    }
+
+                    switch (subOp) {
+                        case 1:
+                            System.out.print("ID del Empleado a ocultar: ");
+                            int idEmp = Integer.parseInt(scanner.nextLine());
+                            Map<String, Object> r1 = tienda.ocultar_empleado(idEmp);
+                            System.out.println("-> " + r1.get("mensaje"));
+                            break;
+                        case 2:
+                            System.out.print("ID del Proveedor a ocultar: ");
+                            int idProv = Integer.parseInt(scanner.nextLine());
+                            Map<String, Object> r2 = tienda.ocultar_proveedor(idProv);
+                            System.out.println("-> " + r2.get("mensaje"));
+                            break;
+                        case 3:
+                            System.out.print("ID del Producto a ocultar: ");
+                            int idProd = Integer.parseInt(scanner.nextLine());
+                            Map<String, Object> r3 = tienda.ocultar_producto(idProd);
+                            System.out.println("-> " + r3.get("mensaje"));
+                            break;
+                        case 4:
+                            System.out.print("ID de la Venta a ocultar/anular: ");
+                            int idVenta = Integer.parseInt(scanner.nextLine());
+                            Map<String, Object> r4 = tienda.ocultar_venta(idVenta);
+                            System.out.println("-> " + r4.get("mensaje"));
+                            break;
+                        case 5:
+                            System.out.print("ID del producto: ");
+                            int idPStock = Integer.parseInt(scanner.nextLine());
+                            System.out.print("Color de la variante (ej. negro): ");
+                            String cVar = scanner.nextLine();
+                            System.out.print("Tamaño de la variante (ej. grande): ");
+                            String tVar = scanner.nextLine();
+                            System.out.print("Cantidad a restar: ");
+                            int qStock = Integer.parseInt(scanner.nextLine());
+
+                            Map<String, Object> vMap = new HashMap<>();
+                            vMap.put("color", cVar);
+                            vMap.put("tamaño", tVar);
+
+                            Map<String, Object> r5 = tienda.quitar_stock_a_producto(idPStock, vMap, qStock);
+                            System.out.println("-> " + r5.get("mensaje"));
+                            break;
+                        case 6:
+                            System.out.println("Operación cancelada.");
+                            break;
+                        default:
+                            System.out.println("Opción no válida.");
+                    }
                     break;
 
                 case 9:
+                    tienda.guardar_datos();
+                    break;
+
+                case 10:
                     System.out.println("Guardando información antes de salir...");
                     tienda.guardar_datos();
                     System.out.println("¡Hasta luego!");
@@ -1391,5 +1460,16 @@ public class Tienda {
 
     public void actualizar_finanzas() {
         administrador_financiero.calcular_ingresos(this.ventas);
+    }
+    public Map<String, Object> quitar_stock_a_producto(int id_producto, Map<String, Object> variante, int cantidad) {
+        List<Producto> productos = buscar_producto(Integer.toString(id_producto));
+        Map<String, Object> result = new HashMap<>();
+        if (productos.size() > 0) {
+            Producto p = productos.get(0);
+            return inventario.agregar_existencias(p, variante, -cantidad);
+        }
+        result.put("exito", false);
+        result.put("mensaje", "Producto no encontrado.");
+        return result;
     }
 }
